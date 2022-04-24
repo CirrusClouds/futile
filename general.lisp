@@ -78,7 +78,7 @@
   (f:convert 'string ch-seq))
 
 (defun to-list (s)
-  (f:convert 'cl:list s))
+  (f:convert 'list s))
 
 (defun to-seq (s)
   (f:convert 'f:seq s))
@@ -96,7 +96,7 @@
                                    (1- n) 
                                    (cons (concatenate (class-of seq) 
                                                       (if acc (car acc) (subseq seq 0 0))
-                                                      (cl:list (elt seq 0)))
+                                                      (list (elt seq 0)))
                                          (cdr acc))
                                    orig-n)))))
       (seq-split seq n nil n))))
@@ -108,9 +108,9 @@
         found
         (if (member (first coll) acc)
             (if (not (member (first coll) found))
-                (duplicates (rest coll) acc (append found (cl:list (first coll))))
+                (duplicates (rest coll) acc (append found (list (first coll))))
                 (duplicates (rest coll) acc found))
-            (duplicates (rest coll) (append acc (cl:list (first coll))) found)))))
+            (duplicates (rest coll) (append acc (list (first coll))) found)))))
 
 (defun i-reduce (f acc coll &optional (i 0))
   "Reduces on a set, list, or seq"
