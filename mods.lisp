@@ -28,7 +28,8 @@
      (defmethod ,sym (scalar (m1 Modular))
        (make-instance 'Modular :mod (mod m1) :num (cl:mod (,op (num m1) scalar) (mod m1))))
      (defmethod ,sym ((m1 Modular) scalar)
-       (,sym scalar m1))))
+       (make-instance 'Modular :mod (mod m1) :num (cl:mod (,op scalar (num 1)) (mod m1))))))
+
 
 (def-bin-mod-method + cl:+)
 (def-bin-mod-method - cl:-)
