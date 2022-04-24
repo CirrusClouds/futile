@@ -81,7 +81,7 @@
   (f:convert 'cl:list s))
 
 (defun to-seq (s)
-  (f:convert 'cl:seq s))
+  (f:convert 'f:seq s))
 
 
 (defun partition (seq n)
