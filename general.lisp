@@ -72,17 +72,20 @@
         string))))
 
 (defun empty? (x)
-  (not (list x)))
+  (not (to-list x)))
 
-(defun string (ch-seq)
+(defun to-string (ch-seq)
   (f:convert 'string ch-seq))
 
-(defun list (s)
+(defun to-list (s)
   (f:convert 'cl:list s))
+
+(defun to-seq (s)
+  (f:convert 'cl:seq s))
 
 
 (defun partition (seq n)
-  (let ((seq (list seq)))
+  (let ((seq (to-list seq)))
     (labels ((seq-split (seq n &optional acc orig-n)
                (cond ((zerop (length seq)) (nreverse acc))
                      ((zerop n) (seq-split seq 
@@ -100,7 +103,7 @@
 
 (defun duplicates (coll &optional (acc '()) (found '()))
   "Returns a list of duplicate members. Can be paired with f:count !"
-  (let ((coll (list coll)))
+  (let ((coll (to-list coll)))
     (if (empty? coll)
         found
         (if (member (first coll) acc)
@@ -111,7 +114,7 @@
 
 (defun i-reduce (f acc coll &optional (i 0))
   "Reduces on a set, list, or seq"
-  (let ((coll (f:convert 'f:seq coll)))
+  (let ((coll (to-seq coll)))
     (if (empty? coll)
         acc
         (i-reduce f (funcall f i acc (f:first coll)) (f:less-first coll) (cl:+ i 1)))))
@@ -119,7 +122,7 @@
 
 (defun i-filter (f coll &optional (i 0))
   "Returns a list. Takes a set, list, seq"
-  (let ((coll (f:convert 'f:seq coll)))
+  (let ((coll (to-seq coll)))
     (if (empty? coll)
         nil
         (if (funcall f i (f:first coll))
@@ -128,7 +131,7 @@
 
 (defun kv-reduce (f acc m)
   "kv-reduce on maps"
-  (let ((coll (list m)))
+  (let ((coll (to-list m)))
     (labels ((aux (f acc coll)
                (if (empty? coll)
                    acc
@@ -159,5 +162,3 @@
 
 
 ;; type-ccase
-
-
